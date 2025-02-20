@@ -1,0 +1,9 @@
+extends default
+
+block content
+    h1(class="text-center font-bold") Something Went Wrong!
+    if message
+        p(class="text-[red] text-sm text-center") #{message}
+    else
+        p(class="text-[red] text-sm text-center") Internal Server Error
+

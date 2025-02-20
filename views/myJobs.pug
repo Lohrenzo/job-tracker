@@ -1,0 +1,71 @@
+extends default
+
+block content
+  div(class="w-full h-full mt-4 sm:px-4 px-2")
+    h1(class="my-6 capitalize text-center text-2xl/9 font-bold tracking-tight text-gray-900") My Job Applications
+    div(class="flex flex-row flex-wrap items-center justify-center sm:gap-4 gap-3 p-1")
+      if myJobs
+        each job in myJobs
+          div(class="sm:w-[300px] w-[10rem] sm:h-[320px] h-[200px] inset-shadow-sm inset-shadow-sky-500/70 rounded-lg duration-500 group overflow-hidden relative bg-black/70 backdrop-blur-sm text-neutral-50 sm:p-4 p-3 flex flex-col justify-evenly")
+            div(class="absolute blur duration-500 group-hover:blur-none w-12 h-12 rounded-full group-hover:translate-x-12 group-hover:translate-y-2 bg-[#14213d] right-12 bottom-12")
+            div(class="absolute blur duration-500 group-hover:blur-none w-36 h-36 rounded-full group-hover:translate-x-12 group-hover:-translate-y-12 bg-[#003049] right-1 -top-12")
+            div(class="absolute blur duration-500 group-hover:blur-none w-24 h-24 bg-[#293241] rounded-full group-hover:-translate-x-12")
+            div(class="z-10 flex flex-col justify-start items-start sm:gap-y-2 gap-y-1 w-full h-full")
+              p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none sm:h-[60px] w-full font-bold") #{job.role} 
+              div(class="leading-tight self-start flex flex-col sm:text-[0.7rem] text-[0.5rem]")
+                p Company name:  #{job.companyname}
+                p Location:  #{job.location}
+                p Amount:  £#{job.amount}
+                  span(class="lowercase")  #{job.timescale}
+                p Stage:  #{job.stage}
+              p(class="sm:h-[108px] h-[70px] overflow-hidden sm:text-[0.67rem] text-[0.4rem] leading-tight tracking-tight text-justify")= job["description"] 
+              p(class="sm:absolute bottom-3 left-4 sm:text-[0.6rem] text-[0.4rem]") 
+                span(class="font-bold") Date Applied: 
+                span #{new Date(job.dateapplied).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
+              a(href=`/my-applications/${job.id}` class="text-gray-400 hover:text-[#ffffff] underline hover:no-underline font-bold self-end sm:text-xs text-[0.5rem] absolute bottom-3 right-4") See more        
+        //- div(class="sm:w-[300px] w-[10rem] sm:h-[320px] h-[200px] inset-shadow-sm inset-shadow-sky-500/70 rounded-lg duration-500 group overflow-hidden relative bg-black/70 backdrop-blur-sm text-neutral-50 sm:p-4 p-3 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+        //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
+
+        //- thead(class="border-b p-2")
+        //-   tr(class="mb-1 text-[0.5rem]")
+        //-     //- th No.
+        //-     th Company Name
+        //-     th Job Role
+        //-     th Job Description
+        //-     th Location
+        //-     th Amount (£)
+        //-     th Time Scale
+        //-     th Date Applied
+        //-     th Application Stage
+        //-     th Accepted/Rejected
+        //-     th CV Name
+        //-     th URL
+        //- tbody(class="text-xs")
+        //-   each job in myJobs
+        //-     tr(class="my-4 border-b")
+        //-       //- td= job["No"]
+        //-       td= job["companyName"]
+        //-       td= job["role"]
+        //-       td= job["description"]
+        //-       td= job["location"]
+        //-       td= job["amount"]
+        //-       td= job.timeScale
+        //-       td= job["dateApplied"]
+        //-       td= job["stage"]
+        //-       td= job["accepted"]
+        //-       td= job["cv"]
+        //-       td
+        //-         if job["url"]
+        //-           a(href=job["url"] target="_blank") Link
+        //-         else
+        //-           | N/A
+      else 
+        div(class="mx-auto p-2 w-full text-center") 
+          p(class="font-bold text-lg text-center capitalize") You have no job application yet 
+          a(href="/my-applications/new" class="text-sm underline text-center") Create New Application
+

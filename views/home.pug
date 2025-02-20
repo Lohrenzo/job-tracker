@@ -1,0 +1,9 @@
+extends default
+
+block content
+  .home-search.overflow-x-hidden
+    //- img(src="/images/hn.png" width="180" height="180")
+    form(action='/search' method='GET')
+      input.home-input(autofocus='' placeholder='Input Job Title' type='search' name='q')
+    br
+    a(href="/my-applications") My Jobs

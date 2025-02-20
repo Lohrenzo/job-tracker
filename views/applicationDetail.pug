@@ -1,0 +1,30 @@
+extends default
+
+block content
+  div(class="w-full h-full mt-4 sm:px-4 px-2")
+    if job
+        div(class="leading-tight self-start flex flex-col sm:text-sm text-[0.5rem]")
+            p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none w-full font-bold") #{job.role} 
+            p Company name:  #{job.companyname}
+            p Location:  #{job.location}
+            p Amount:  £#{job.amount}
+                span(class="lowercase")  #{job.timescale}
+            p Stage:  #{job.stage}
+            p Date Applied:  #{job.dateapplied}
+            p Description:  #{job.description}
+            p CV:
+                span 
+                    if job.cv
+                        a(href=`${job.cv}` target="_blank") CV Link
+                    else 
+                        | N/A
+            p Accepted:  #{job.accepted}
+            p Rejected:  #{job.rejected}
+            p 
+                span 
+                    if job.url
+                        a(href=`${job.url}` target="_blank") Job Application Link
+                    else 
+                        | N/A
+    else 
+        p(class="text-red") #{message}
