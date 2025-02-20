@@ -51,6 +51,14 @@ export const updateUserById = async (
   return result.rows[0];
 };
 
+export const updatePasswordById = async (id, password) => {
+  const result = await pool.query(
+    "UPDATE users SET password=$1 WHERE id=$2 RETURNING *",
+    [password, id]
+  );
+  return result.rows[0];
+};
+
 export const deleteUserById = async (id) => {
   const result = await pool.query(
     "DELETE FROM users WHERE id = $1 RETURNING *",

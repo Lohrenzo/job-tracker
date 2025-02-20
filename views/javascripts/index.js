@@ -30,3 +30,43 @@ document.addEventListener("keydown", (event) => {
     dropdownButton.setAttribute("aria-expanded", "false");
   }
 });
+
+// Logic For Update Profile Form Disabling Submit Button
+const updateProfileForm = document.getElementById("update-profile-form");
+const updateProfileSubmitBtn = document.getElementById(
+  "update-profile-submit-btn"
+);
+const updateInputs = updateProfileForm.querySelectorAll("input");
+
+// Store initial values of all inputs
+const initialValues = {};
+updateInputs.forEach((input) => {
+  initialValues[input.name] = input.value;
+});
+
+function checkForChanges() {
+  let hasChanges = false;
+
+  updateInputs.forEach((input) => {
+    if (input.type === "file") {
+      if (input.files.length > 0) {
+        hasChanges = true;
+      }
+    } else {
+      if (input.value !== initialValues[input.name]) {
+        hasChanges = true;
+      }
+    }
+  });
+
+  updateProfileSubmitBtn.disabled = !hasChanges;
+}
+
+// Attach event listeners to all inputs
+updateInputs.forEach((input) => {
+  input.addEventListener("input", checkForChanges);
+  input.addEventListener("change", checkForChanges);
+});
+
+// Initially disable the button
+updateProfileSubmitBtn.disabled = true;

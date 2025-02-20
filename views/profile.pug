@@ -1,0 +1,64 @@
+extends default
+
+block content
+    div(class="flex min-h-screen w-full flex-col justify-center px-6")
+      div(class="sm:mx-auto sm:w-full sm:max-w-sm")
+        h2(class="mt-6 capitalize text-center text-2xl/9 font-bold tracking-tight text-gray-900") Update Profile Details
+        
+      div(class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm")
+        if(message)
+          h4.text-red-500 #{message}
+        form(class="space-y-6" id="update-profile-form" action="/profile-update" method="POST" enctype="multipart/form-data")
+          div
+            label(for="image" class="block text-sm/6 font-medium text-gray-900") Profile Image
+            div.mt-2
+              input(type="file" name="image" id="image" accept=".png, .jpg, .jpeg" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div
+            label(for="username" class="block text-sm/6 font-medium text-gray-900") Username
+            div.mt-2
+              input(type="text" name="username" id="username" value=`${user.username}` autocomplete="username" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div
+            label(for="email" class="block text-sm/6 font-medium text-gray-900") Email Address
+            div.mt-2
+              input(type="emai" name="email" id="email" value=`${user.email}` autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div
+            label(for="firstName" class="block text-sm/6 font-medium text-gray-900") First Name
+            div.mt-2
+              input(type="text" name="firstName" id="firstName" value=`${user.firstname}` autocomplete="firstName" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div
+            label(for="lastName" class="block text-sm/6 font-medium text-gray-900") Last Name
+            div.mt-2
+              input(type="text" name="lastName" id="lastName" value=`${user.lastname}` autocomplete="lastName" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div(class="mb-4")
+            button(type="submit" id="update-profile-submit-btn" class="flex w-full disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer justify-center rounded-md disabled:hover:bg-sky-600 bg-sky-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600") Update Profile
+        
+        br
+      div(class="sm:mx-auto sm:w-full sm:max-w-sm")
+        h2(class="mt-6 capitalize text-center text-2xl/9 font-bold tracking-tight text-gray-900") Change Password
+
+        if(passwordMessage)
+          h4.text-red-500 #{passwordMessage}
+        if(successMessage)
+          h4(class="text-blue-600") #{successMessage}
+        form(class="space-y-6" id="password-update-form" action="/password-update" method="POST")
+          div
+            label(for="password" class="block text-sm/6 font-medium text-gray-900") Password            
+            div.mt-2
+              input(type="password" name="password" id="password" autocomplete="password" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div
+            label(for="password2" class="block text-sm/6 font-medium text-gray-900") Confirm Password           
+            div.mt-2
+              input(type="password" name="password2" id="password2" autocomplete="password2" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+          div(class="mb-4")
+            button(type="submit" id="update-profile-submit-btn" class="flex w-full disabled:opacity-75 disabled:cursor-not-allowed cursor-pointer justify-center rounded-md disabled:hover:bg-sky-600 bg-sky-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-sky-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600") Submit
+
+
+
+

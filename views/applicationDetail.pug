@@ -3,7 +3,9 @@ extends default
 block content
   div(class="w-full h-full mt-4 sm:px-4 px-2")
     if job
-        div(class="leading-tight self-start flex flex-col sm:text-sm text-[0.5rem]")
+        div(class="relative leading-tight self-start flex flex-col sm:text-sm text-[0.5rem]")
+            div(class="absolute bg-blue-600 text-white p-2 rounded-lg right-3 top-5 z-20")
+                p Edit
             p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none w-full font-bold") #{job.role} 
             p Company name:  #{job.companyname}
             p Location:  #{job.location}

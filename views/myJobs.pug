@@ -11,7 +11,8 @@ block content
             div(class="absolute blur duration-500 group-hover:blur-none w-36 h-36 rounded-full group-hover:translate-x-12 group-hover:-translate-y-12 bg-[#003049] right-1 -top-12")
             div(class="absolute blur duration-500 group-hover:blur-none w-24 h-24 bg-[#293241] rounded-full group-hover:-translate-x-12")
             div(class="z-10 flex flex-col justify-start items-start sm:gap-y-2 gap-y-1 w-full h-full")
-              p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none sm:h-[60px] w-full font-bold") #{job.role} 
+              p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none sm:h-[60px] w-full font-bold") 
+                a(href=`/my-applications/${job.id}`) #{job.role} 
               div(class="leading-tight self-start flex flex-col sm:text-[0.7rem] text-[0.5rem]")
                 p Company name:  #{job.companyname}
                 p Location:  #{job.location}
