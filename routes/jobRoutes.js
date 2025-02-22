@@ -1,18 +1,18 @@
-import express from "express";
 // import path from "path";
 // import fs from "fs";
 // import { fileURLToPath } from "url";
+// const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+// const __dirname = path.dirname(__filename); // get the name of the directory
+import express from "express";
 import requireAuth from "../middlewares/requireAuth.js";
 import {
   createJobController,
   createJobForm,
   jobDetailController,
   loggenInUserJobsController,
+  updateJobController,
 } from "../controllers/jobController.js";
 import upload from "../db/multerConfig.js";
-
-// const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-// const __dirname = path.dirname(__filename); // get the name of the directory
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.get("/my-applications/new", requireAuth, createJobForm);
 router.get("/my-applications", requireAuth, loggenInUserJobsController);
 
 // Job application detail route
-router.get("/my-applications/:jobId", requireAuth, jobDetailController);
+router.get("/my-applications/:slug", requireAuth, jobDetailController);
 
 // New job application with file upload route
 router.post(
@@ -32,6 +32,11 @@ router.post(
   upload("cv"),
   createJobController
 );
+
+// Update job application route
+router.post("/my-applications/:slug/update", requireAuth, updateJobController);
+
+export default router;
 
 // Serve CV files route
 // router.get("/my-applications/cv/:filename", requireAuth, (req, res) => {
@@ -45,5 +50,3 @@ router.post(
 //     res.status(404).send("File not found");
 //   }
 // });
-
-export default router;

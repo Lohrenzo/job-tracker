@@ -3,30 +3,97 @@ extends default
 block content
   div(class="w-full h-full mt-4 sm:px-4 px-2")
     if job
-        div(class="relative leading-tight self-start flex flex-col sm:text-sm text-[0.5rem]")
-            div(class="absolute bg-blue-600 text-white p-2 rounded-lg right-3 top-5 z-20")
+        div(class="relative leading-tight self-start flex flex-col text-white sm:text-sm text-[0.5rem]")
+            button(id="edit-btn" aria-expanded="false" class="fixed font-semibold cursor-pointer transition duration-150 ease-in-out hover:scale-110 bg-sky-900 hover:bg-sky-700 text-white p-3 rounded-s-lg shadow-gray-800/50 shadow-sm right-0 top-30 z-20")
                 p Edit
-            p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none w-full font-bold") #{job.role} 
-            p Company name:  #{job.companyname}
-            p Location:  #{job.location}
-            p Amount:  £#{job.amount}
-                span(class="lowercase")  #{job.timescale}
-            p Stage:  #{job.stage}
-            p Date Applied:  #{job.dateapplied}
-            p Description:  #{job.description}
-            p CV:
-                span 
-                    if job.cv
-                        a(href=`${job.cv}` target="_blank") CV Link
-                    else 
-                        | N/A
-            p Accepted:  #{job.accepted}
-            p Rejected:  #{job.rejected}
-            p 
-                span 
+            p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-3 pb-2 leading-none w-full font-bold") #{job.role} 
+            div(class="grid grid-cols-2 gap-y-2 gap-x-2 p-3 mb-2")
+                p Company name:  #{job.companyname}
+                p Date Applied:  #{new Date(job.dateapplied).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
+                p Location:  #{job.location}
+                p Amount:  £#{job.amount}
+                    span(class="lowercase")  #{job.timescale}
+                p CV:
+                    span 
+                        if job.cv
+                            a(href=`${job.cv}` target="_blank" class="underline hover:no-underline") View CV Here 
+                        else 
+                            | N/A
+                p Stage:  #{job.stage}
+                if job.accepted === true 
+                    p Accepted:  Yes
+                else 
+                    p Accepted:  No
+                if job.rejected === true 
+                    p Rejected:  Yes
+                else 
+                    p Rejected:  No
+            p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-3 pb-2 leading-none w-full font-bold") Job Description
+            div(class="p-3 text-justify")
+                p #{job.description}
+            div(class="grid grid-cols-1 gap-y-4 sm:text-[0.8rem] text-[0.6rem] mb-2 text-center p-3 leading-none w-full") 
+                p 
                     if job.url
-                        a(href=`${job.url}` target="_blank") Job Application Link
-                    else 
-                        | N/A
+                        a(href=`${job.url}` target="_blank" class="font-semibold p-2 mb-2 rounded-lg transition duration-150 ease-in-out bg-sky-900 hover:bg-sky-700") Job Application Link
+                    //- else 
+                    //-     | N/A
+                if job.updated_at 
+                    p(class="sm:text-[0.7rem] text-[0.4rem] mt-3") This Job Was Last Updated On #{new Date(job.updated_at).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
+        //- Edit Popup Form
+        div(id="edit-popup" class="fixed hidden inset-0 flex items-center justify-center bg-gray-900/95 z-60")
+            div(class="bg-gray-300 p-6 rounded-lg shadow-lg md:w-2/5 sm:w-3/5 w-[80%] relative")
+                //- Close Button
+                button(id="close-edit-btn" class="absolute cursor-pointer font-bold top-7 right-6 text-gray-700 hover:text-gray-900") ✕
+
+                //- form
+                form(action=`/my-applications/${job.slug}/update`, method="POST" class="space-y-4") 
+                    h3(class="sm:text-lg text-sm font-semibold sm:w-full w-[90%]") Edit Job Details for #{job.role}
+                    //- div
+                    //-     label(for="role" class="block text-sm font-medium text-gray-700") Role
+                    //-     input(type="text" name="role" id="role" value=`${job.role}` required class="w-full mt-1 p-2 border rounded-md")
+
+                    //- div
+                    //-     label(for="companyname" class="block text-sm font-medium text-gray-700") Company Name
+                    //-     input(type="text" name="companyname" id="companyname" value=`${job.companyname}` required class="w-full mt-1 p-2 border rounded-md")
+
+                    //- div
+                    //-     label(for="location" class="block text-sm font-medium text-gray-700") Location
+                    //-     input(type="text" name="location" id="location" value=`${job.location}` required class="w-full mt-1 p-2 border rounded-md")
+
+                    div
+                        label(for="amount" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Salary
+                        div(class="flex flex-row gap-3")
+                            input(type="number" name="amount" id="amount" value=`${job.amount}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                            select(name="timescale" autocomplete="timescale" id="timescale" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                                option(value="Yearly" selected=(job.timescale === "Yearly")) Yearly
+                                option(value="Monthly" selected=(job.timescale === "Monthly")) Monthly
+                                option(value="Forthnightly" selected=(job.timescale === "Forthnightly")) Forthnightly
+                                option(value="Weekly" selected=(job.timescale === "Weekly")) Weekly
+                                option(value="Weekly" selected=(job.timescale === "Hourly")) Hourly
+
+                    div
+                        label(for="dateapplied" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Date Applied
+                        input(type="date" name="dateapplied" id="dateapplied" autocomplete="dateapplied" value=`${new Date(job.dateapplied).toISOString().split('T')[0]}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+                    div
+                        label(for="stage" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Application Stage
+                        input(type="text" name="stage" id="stage" value=`${job.stage}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+
+                    div
+                        label(for="accepted" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Have You Been Accepted?
+                        select(name="accepted" autocomplete="accepted" id="accepted" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                            option(value="true" selected=(job.accepted === true)) Yes
+                            option(value="false" selected=(job.accepted === false)) No
+
+                    div
+                        label(for="rejected" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Were You Rejected?
+                        select(name="rejected" autocomplete="rejected" id="rejected" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                            option(value="true" selected=(job.rejected === true)) Yes
+                            option(value="false" selected=(job.rejected === false)) No
+
+                    // Submit Button
+                    button(type="submit" class="mt-8 cursor-pointer w-full bg-blue-600 text-white p-2 sm:text-base text-sm rounded-md hover:bg-blue-500") Save Changes
+    
     else 
-        p(class="text-red") #{message}
+        p(class="text-[red] text-center") #{message}
+    script(src="/javascripts/detail.js")

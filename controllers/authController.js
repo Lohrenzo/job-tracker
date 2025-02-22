@@ -83,8 +83,8 @@ export const createUserController = async (req, res, next) => {
       });
     }
 
-    console.log("File: ", req.file);
-    console.log("File type: ", req.file.mimetype);
+    // console.log("File: ", req.file);
+    // console.log("File type: ", req.file.mimetype);
 
     // Upload image to S3 and get the file URL
     const s3ImageUrl = await s3Upload(req.file, "profile", username);
@@ -101,12 +101,12 @@ export const createUserController = async (req, res, next) => {
       hashedPassword
     );
 
-    console.log("New User Created: ", newUser);
+    // console.log("New User Created: ", newUser);
 
     // Save user data in session
     req.session.user = newUser;
 
-    console.log("Session after sign up: ", req.session);
+    // console.log("Session after sign up: ", req.session);
 
     // req.session.save((err) => {
     //   if (err) {
@@ -142,7 +142,7 @@ export const loginController = async (req, res, next) => {
     }
 
     req.session.user = user[0];
-    console.log("Session after login:", req.session);
+    // console.log("Session after login:", req.session);
     res.redirect("/my-applications");
   } catch (error) {
     next(error);

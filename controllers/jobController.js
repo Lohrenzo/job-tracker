@@ -2,7 +2,9 @@ import { s3Upload } from "../db/s3Service.js";
 import {
   createJob,
   getJobById,
+  getJobBySlug,
   getUserSpecificJobs,
+  updateJobBySlug,
 } from "../models/jobModel.js";
 
 // New job application form
@@ -59,7 +61,8 @@ export const createJobController = async (req, res, next) => {
       req.session.user.id // Link the current user
     );
 
-    console.log("New Job Created: ", newJob);
+    console.log("New Job Created");
+    // console.log("New Job Created: ", newJob);
     res.redirect("/my-applications");
   } catch (error) {
     console.error("Error creating job: ", error);
@@ -73,7 +76,7 @@ export const loggenInUserJobsController = async (req, res) => {
     // Fetch jobs only for the logged-in user
     const jobs = await getUserSpecificJobs(req.session.user.id);
 
-    console.log("My Jobs: ", jobs);
+    // console.log("My Jobs: ", jobs);
 
     res.render("myJobs", {
       title: "My Job Applications",
@@ -93,7 +96,8 @@ export const loggenInUserJobsController = async (req, res) => {
 export const jobDetailController = async (req, res, next) => {
   try {
     // Fetch job details from database
-    const job = await getJobById(parseInt(req.params.jobId));
+    // const job = await getJobById(parseInt(req.params.jobId));
+    const job = await getJobBySlug(req.params.slug);
 
     if (!job) {
       res.render("applicationDetail", {
@@ -102,15 +106,16 @@ export const jobDetailController = async (req, res, next) => {
       });
     }
 
+    // Make sure the user can only view jobs posted by them
     if (job.candidateid !== req.session.user.id) {
       res.render("applicationDetail", {
         title: `Job Application Detail`,
         message: `You Are Not Authorized To View This Job!!`,
       });
     }
-    console.log("Logged In User ID: ", req.session.user.id);
+    // console.log("Logged In User ID: ", req.session.user.id);
 
-    console.log("Job Application Detail: ", job);
+    // console.log("Job Application Detail: ", job);
 
     res.render("applicationDetail", {
       title: `Detail for ${job.role}`,
@@ -118,6 +123,53 @@ export const jobDetailController = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Error fetching job application: ", error);
+    next(error);
+  }
+};
+
+// Update job application
+export const updateJobController = async (req, res, next) => {
+  try {
+    const oldJobData = await getJobBySlug(req.params.slug);
+
+    if (!oldJobData) {
+      res.render("applicationDetail", {
+        title: `Job Application Detail`,
+        message: `Job Application Not Available!!`,
+      });
+    }
+
+    // Extract form data
+    const { amount, timescale, dateapplied, stage, accepted, rejected } =
+      req.body;
+
+    // Use existing values if fields are empty
+    const updatedJobData = {
+      amount: amount.trim() || oldJobData.amount,
+      timescale: timescale.trim() || oldJobData.timescale,
+      dateapplied: dateapplied.trim() || oldJobData.dateapplied,
+      stage: stage.trim() || oldJobData.stage,
+      accepted: accepted.trim() || oldJobData.accepted,
+      rejected: rejected.trim() || oldJobData.rejected,
+    };
+
+    // Update the job application in the database
+    await updateJobBySlug(
+      req.params.slug,
+      updatedJobData.amount,
+      updatedJobData.timescale,
+      new Date(updatedJobData.dateapplied),
+      updatedJobData.stage,
+      updatedJobData.accepted,
+      updatedJobData.rejected
+    );
+
+    res.render("applicationDetail", {
+      title: "Job Application Detail",
+      // successMessage: "Job application updated successfully!",
+    });
+  } catch (error) {
+    console.error("Error updating job application:", error.message);
     next(error);
   }
 };

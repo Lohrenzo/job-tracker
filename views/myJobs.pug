@@ -2,7 +2,7 @@ extends default
 
 block content
   div(class="w-full h-full mt-4 sm:px-4 px-2")
-    h1(class="my-6 capitalize text-center text-2xl/9 font-bold tracking-tight text-gray-900") My Job Applications
+    h1(class="my-6 capitalize text-center sm:text-2xl/9 text-lg font-bold tracking-tight text-gray-300") My Job Applications
     div(class="flex flex-row flex-wrap items-center justify-center sm:gap-4 gap-3 p-1")
       if myJobs
         each job in myJobs
@@ -12,7 +12,7 @@ block content
             div(class="absolute blur duration-500 group-hover:blur-none w-24 h-24 bg-[#293241] rounded-full group-hover:-translate-x-12")
             div(class="z-10 flex flex-col justify-start items-start sm:gap-y-2 gap-y-1 w-full h-full")
               p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-0 pb-2 leading-none sm:h-[60px] w-full font-bold") 
-                a(href=`/my-applications/${job.id}`) #{job.role} 
+                a(href=`/my-applications/${job.slug}`) #{job.role} 
               div(class="leading-tight self-start flex flex-col sm:text-[0.7rem] text-[0.5rem]")
                 p Company name:  #{job.companyname}
                 p Location:  #{job.location}
@@ -23,7 +23,7 @@ block content
               p(class="sm:absolute bottom-3 left-4 sm:text-[0.6rem] text-[0.4rem]") 
                 span(class="font-bold") Date Applied: 
                 span #{new Date(job.dateapplied).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
-              a(href=`/my-applications/${job.id}` class="text-gray-400 hover:text-[#ffffff] underline hover:no-underline font-bold self-end sm:text-xs text-[0.5rem] absolute bottom-3 right-4") See more        
+              a(href=`/my-applications/${job.slug}` class="text-gray-400 hover:text-[#ffffff] underline hover:no-underline font-bold self-end sm:text-xs text-[0.5rem] absolute bottom-3 right-4") See more        
         //- div(class="sm:w-[300px] w-[10rem] sm:h-[320px] h-[200px] inset-shadow-sm inset-shadow-sky-500/70 rounded-lg duration-500 group overflow-hidden relative bg-black/70 backdrop-blur-sm text-neutral-50 sm:p-4 p-3 flex flex-col justify-evenly")
         //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")
         //- div(class="w-[300px] h-[320px] rounded-lg duration-500 group overflow-hidden relative bg-black/80 backdrop-blur-sm text-neutral-50 p-4 flex flex-col justify-evenly")

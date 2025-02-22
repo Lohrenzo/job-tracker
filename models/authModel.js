@@ -45,7 +45,7 @@ export const updateUserById = async (
   image
 ) => {
   const result = await pool.query(
-    "UPDATE users SET username=$1, email=$2, firstName=$3, lastName=$4, image=$5 WHERE id=$6 RETURNING *",
+    "UPDATE users SET username=$1, email=$2, firstName=$3, lastName=$4, image=$5, updated_at=NOW() WHERE id=$6 RETURNING *",
     [username, email, firstName, lastName, image, id]
   );
   return result.rows[0];
@@ -53,7 +53,7 @@ export const updateUserById = async (
 
 export const updatePasswordById = async (id, password) => {
   const result = await pool.query(
-    "UPDATE users SET password=$1 WHERE id=$2 RETURNING *",
+    "UPDATE users SET password=$1, updated_at=NOW() WHERE id=$2 RETURNING *",
     [password, id]
   );
   return result.rows[0];

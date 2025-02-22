@@ -1,3 +1,7 @@
+console.log = console.warn = console.error = function () {};
+
+// Logic for navbar dropdown start
+//
 const dropdownButton = document.getElementById("menu-button");
 const profileDropdown = document.getElementById("dropdown");
 
@@ -30,8 +34,11 @@ document.addEventListener("keydown", (event) => {
     dropdownButton.setAttribute("aria-expanded", "false");
   }
 });
+//
+// Logic end
 
-// Logic For Update Profile Form Disabling Submit Button
+// Logic For Update Profile Form Disabling Submit Button start
+//
 const updateProfileForm = document.getElementById("update-profile-form");
 const updateProfileSubmitBtn = document.getElementById(
   "update-profile-submit-btn"
@@ -70,3 +77,5 @@ updateInputs.forEach((input) => {
 
 // Initially disable the button
 updateProfileSubmitBtn.disabled = true;
+//
+// Logic end

@@ -10,7 +10,7 @@
 // };
 
 function errorHandling(err, req, res, next) {
-  console.error("Unhandles Error: ", err);
+  console.error("Unhandled Error: ", err);
   res.render("error", {
     title: "Something Went Wrong",
     error: err.message,

@@ -1,9 +1,18 @@
 extends default
 
 block content
-  .home-search.overflow-x-hidden
+  div(class="flex min-h-[80vh] overflow-x-hidden w-full flex-col justify-center px-6")
+    div(class="sm:mx-auto sm:w-full sm:max-w-sm")
+      h1(class="mt-6 capitalize text-center sm:text-2xl/9 text-xl font-bold tracking-tight text-gray-400") Welcome to job application tracker
+    div(class="text-center flex flex-col gap-y-3")
+      p(class="text-gray-500 sm:text-base text-xs") A tool for keeping track of the jobs you have applied to
+      p 
+        if user
+          a(href="/my-applications" class="sm:text-base text-xs cursor-pointer transition-all duration-150 ease-in-out hover:scale-110 bg-sky-900 hover:bg-sky-700 text-gray-200 rounded-lg p-2") My Jobs
+        else 
+          a(href="/login" class="sm:text-base text-xs cursor-pointer transition-all duration-150 ease-in-out hover:scale-110 bg-sky-900 hover:bg-sky-700 text-gray-200 rounded-lg p-2") Get Started
     //- img(src="/images/hn.png" width="180" height="180")
-    form(action='/search' method='GET')
-      input.home-input(autofocus='' placeholder='Input Job Title' type='search' name='q')
-    br
-    a(href="/my-applications") My Jobs
+    //- form(action='/search' method='GET')
+    //-   input.home-input(autofocus='' placeholder='Input Job Title' type='search' name='q')
+    //- br
+

@@ -1,10 +1,10 @@
 import {
   S3Client,
   PutObjectCommand,
-  CreateBucketCommand,
-  DeleteObjectCommand,
-  DeleteBucketCommand,
-  paginateListObjectsV2,
+  // CreateBucketCommand,
+  // DeleteObjectCommand,
+  // DeleteBucketCommand,
+  // paginateListObjectsV2,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
 // import { parseUrl } from "@smithy/url-parser";
@@ -26,7 +26,7 @@ const s3Client = new S3Client({
 });
 
 export async function s3Upload(file, folder, username) {
-  console.log("File: ", file);
+  // console.log("File: ", file);
   const fileKey = `uploads/${folder}/${username}/${Date.now()}-${
     file.originalname
   }`;

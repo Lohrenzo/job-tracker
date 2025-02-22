@@ -46,6 +46,7 @@ export default async function createTables() {
           accepted BOOLEAN DEFAULT FALSE,
           rejected BOOLEAN DEFAULT FALSE,
           url VARCHAR(255),
+          slug VARCHAR(400),
           candidateId INT NOT NULL,
           created_at TIMESTAMP DEFAULT NOW(),
           updated_at TIMESTAMP DEFAULT NULL,
