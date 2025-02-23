@@ -5,12 +5,16 @@ block content
       div(class="sm:mx-auto sm:w-full sm:max-w-sm")
         h2(class="mt-6 capitalize text-center text-2xl/9 font-bold tracking-tight text-gray-300") Update Profile Details
         
+      if user.image
+        div(class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm")
+          img(src=`${user.image}` height=200 width=200 alt=`Profile: ${user.username}` class="mx-auto cursor-pointer rounded-3xl object-fill")
+        
       div(class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm")
         if(message)
           h4.text-red-500 #{message}
         form(class="space-y-6" id="update-profile-form" action="/profile-update" method="POST" enctype="multipart/form-data")
           div
-            label(for="image" class="block text-sm/6 font-medium text-gray-400") Profile Image
+            label(for="image" class="block text-sm/6 font-medium text-gray-400") Profile Picture
             div.mt-2
               input(type="file" name="image" id="image" accept=".png, .jpg, .jpeg" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
 

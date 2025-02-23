@@ -164,10 +164,7 @@ export const updateJobController = async (req, res, next) => {
       updatedJobData.rejected
     );
 
-    res.render("applicationDetail", {
-      title: "Job Application Detail",
-      // successMessage: "Job application updated successfully!",
-    });
+    res.redirect(`/my-applications/${req.params.slug}`);
   } catch (error) {
     console.error("Error updating job application:", error.message);
     next(error);

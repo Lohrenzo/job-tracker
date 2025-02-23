@@ -40,7 +40,7 @@ block content
                 if job.updated_at 
                     p(class="sm:text-[0.7rem] text-[0.4rem] mt-3") This Job Was Last Updated On #{new Date(job.updated_at).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
         //- Edit Popup Form
-        div(id="edit-popup" class="fixed hidden inset-0 flex items-center justify-center bg-gray-900/95 z-60")
+        div(id="edit-popup" class="fixed hidden overflow-y-auto inset-0 flex items-center justify-center bg-gray-900/95 z-60")
             div(class="bg-gray-300 p-6 rounded-lg shadow-lg md:w-2/5 sm:w-3/5 w-[80%] relative")
                 //- Close Button
                 button(id="close-edit-btn" class="absolute cursor-pointer font-bold top-7 right-6 text-gray-700 hover:text-gray-900") ✕

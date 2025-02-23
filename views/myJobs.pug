@@ -4,7 +4,7 @@ block content
   div(class="w-full h-full mt-4 sm:px-4 px-2")
     h1(class="my-6 capitalize text-center sm:text-2xl/9 text-lg font-bold tracking-tight text-gray-300") My Job Applications
     div(class="flex flex-row flex-wrap items-center justify-center sm:gap-4 gap-3 p-1")
-      if myJobs
+      if myJobs.length > 0
         each job in myJobs
           div(class="sm:w-[300px] w-[10rem] sm:h-[320px] h-[200px] inset-shadow-sm inset-shadow-sky-500/70 rounded-lg duration-500 group overflow-hidden relative bg-black/70 backdrop-blur-sm text-neutral-50 sm:p-4 p-3 flex flex-col justify-evenly")
             div(class="absolute blur duration-500 group-hover:blur-none w-12 h-12 rounded-full group-hover:translate-x-12 group-hover:translate-y-2 bg-[#14213d] right-12 bottom-12")
@@ -66,7 +66,7 @@ block content
         //-         else
         //-           | N/A
       else 
-        div(class="mx-auto p-2 w-full text-center") 
-          p(class="font-bold text-lg text-center capitalize") You have no job application yet 
-          a(href="/my-applications/new" class="text-sm underline text-center") Create New Application
+        div(class="mx-auto p-2 w-full text-center text-gray-400") 
+          p(class="font-bold text-lg text-center capitalize") You have no job applications yet 
+          a(href="/my-applications/new" class="text-sm underline hover:no-underline text-center") Create New Application
 
