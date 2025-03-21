@@ -17,9 +17,9 @@ const salt = bcrypt.genSaltSync(10);
 
 // create the email transporter
 const transporter = nodemailer.createTransport({
-  host: "smtp.ionos.co.uk",
-  port: 465,
-  secure: true, // true for port 465, false for other ports
+  host: process.env.EMAIL_TRANSPORTER_HOST,
+  port: process.env.EMAIL_TRANSPORTER_PORT,
+  secure: process.env.EMAIL_TRANSPORTER_SECURE,
   auth: {
     user: process.env.EMAIL_ADDRESS,
     pass: process.env.EMAIL_PASSWORD,
