@@ -8,27 +8,27 @@ const closeEditBtn = document.getElementById("close-edit-btn");
 
 // Function to toggle popup visibility
 const togglePopup = () => {
-  const isHidden = deletePopup.classList.toggle("hidden");
-  deleteBtn.setAttribute("aria-expanded", !isHidden);
+  const isHidden = editPopup.classList.toggle("hidden");
+  editBtn.setAttribute("aria-expanded", !isHidden);
 };
 
 // Toggle popup when clicking the edit button
-deleteBtn?.addEventListener("click", (event) => {
+editBtn?.addEventListener("click", (event) => {
   event.stopPropagation(); // Prevents bubbling issues
   togglePopup();
 });
 
 // Close popup when clicking the close button
-closeDeleteBtn?.addEventListener("click", () => {
+closeEditBtn?.addEventListener("click", () => {
   togglePopup();
 });
 
 // Close popup when clicking outside of it
 document.addEventListener("click", (event) => {
   if (
-    !deletePopup.classList.contains("hidden") &&
-    !deletePopup.contains(event.target) &&
-    event.target !== deleteBtn
+    !editPopup.classList.contains("hidden") &&
+    !editPopup.contains(event.target) &&
+    event.target !== editBtn
   ) {
     togglePopup();
   }

@@ -29,7 +29,7 @@ block content
                 else 
                     p Rejected:  No
             p(class="sm:text-[1rem] text-[0.7rem] text-center border-b sm:pb-3 pb-2 leading-none w-full font-bold") Job Description
-            div(class="p-3 text-justify")
+            div(class="p-3 sm:text-[0.94rem] text-[0.64rem] text-justify")
                 p #{job.description}
             div(class="grid grid-cols-1 gap-y-4 sm:text-[0.8rem] text-[0.6rem] mb-2 text-center p-3 leading-none w-full") 
                 p 
@@ -41,13 +41,13 @@ block content
                     p(class="sm:text-[0.7rem] text-[0.4rem] mt-3") This Job Was Last Updated On #{new Date(job.updated_at).toLocaleDateString("en-GB", { weekday: "short", day: '2-digit', month: 'short', year: 'numeric' })}
         //- Edit Popup Form
         div(id="edit-popup" class="fixed hidden overflow-y-auto inset-0 flex items-center justify-center bg-gray-900/95 z-60")
-            div(class="bg-gray-300 p-6 rounded-lg shadow-lg md:w-2/5 sm:w-3/5 w-[80%] relative")
+            div(class="bg-gray-700 p-6 rounded-lg shadow-lg md:w-2/5 sm:w-3/5 w-[80%] relative")
                 //- Close Button
-                button(id="close-edit-btn" class="absolute cursor-pointer font-bold top-7 right-6 text-gray-700 hover:text-gray-900") ✕
+                button(id="close-edit-btn" class="absolute cursor-pointer font-bold top-7 right-6 text-gray-300 hover:text-gray-200") ✕
 
                 //- form
                 form(action=`/my-applications/${job.slug}/update`, method="POST" class="space-y-4") 
-                    h3(class="sm:text-lg text-sm font-semibold sm:w-full w-[90%]") Edit Job Details for #{job.role}
+                    h3(class="text-gray-300 sm:text-lg text-sm font-semibold sm:w-full w-[90%]") Edit Job Details for #{job.role}
                     //- div
                     //-     label(for="role" class="block text-sm font-medium text-gray-700") Role
                     //-     input(type="text" name="role" id="role" value=`${job.role}` required class="w-full mt-1 p-2 border rounded-md")
@@ -61,9 +61,9 @@ block content
                     //-     input(type="text" name="location" id="location" value=`${job.location}` required class="w-full mt-1 p-2 border rounded-md")
 
                     div
-                        label(for="amount" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Salary
+                        label(for="amount" class="sm:text-sm text-[0.7rem] font-medium text-gray-300") Salary
                         div(class="flex flex-row gap-3")
-                            input(type="number" name="amount" id="amount" value=`${job.amount}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                            input(type="text" name="amount" id="amount" value=`${job.amount}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
                             select(name="timescale" autocomplete="timescale" id="timescale" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
                                 option(value="Yearly" selected=(job.timescale === "Yearly")) Yearly
                                 option(value="Monthly" selected=(job.timescale === "Monthly")) Monthly
@@ -72,21 +72,29 @@ block content
                                 option(value="Weekly" selected=(job.timescale === "Hourly")) Hourly
 
                     div
-                        label(for="dateapplied" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Date Applied
+                        label(for="dateapplied" class="sm:text-sm text-[0.7rem] font-medium text-gray-300") Date Applied
                         input(type="date" name="dateapplied" id="dateapplied" autocomplete="dateapplied" value=`${new Date(job.dateapplied).toISOString().split('T')[0]}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
 
                     div
-                        label(for="stage" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Application Stage
-                        input(type="text" name="stage" id="stage" value=`${job.stage}` required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                        label(for="stage" class="sm:text-sm text-[0.7rem] font-medium text-gray-300") Application Stage
+                        select(name="stage" id="stage" autocomplete="stage" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                            option(value="Applied" selected=(job.stage === "Applied")) Applied
+                            option(value="Phone Screen" selected=(job.stage === "Phone Screen")) Phone Screen
+                            option(value="Test/Challenge" selected=(job.stage === "Test/Challenge")) Test/Challenge
+                            option(value="Pending" selected=(job.stage === "Pending")) Pending
+                            option(value="Interview" selected=(job.stage === "Interview")) Interview
+                            option(value="Offer" selected=(job.stage === "Offer")) Offer
+                            option(value="Hired" selected=(job.stage === "Hired")) Hired
+                            option(value="Rejected" selected=(job.stage === "Rejected")) Rejected
 
                     div
-                        label(for="accepted" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Have You Been Accepted?
+                        label(for="accepted" class="sm:text-sm text-[0.7rem] font-medium text-gray-300") Have You Been Accepted?
                         select(name="accepted" autocomplete="accepted" id="accepted" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
                             option(value="true" selected=(job.accepted === true)) Yes
                             option(value="false" selected=(job.accepted === false)) No
 
                     div
-                        label(for="rejected" class="sm:text-sm text-[0.7rem] font-medium text-gray-700") Were You Rejected?
+                        label(for="rejected" class="sm:text-sm text-[0.7rem] font-medium text-gray-300") Were You Rejected?
                         select(name="rejected" autocomplete="rejected" id="rejected" required class="block w-full rounded-md bg-white mt-1 p-2 sm:text-base text-[0.8rem] text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
                             option(value="true" selected=(job.rejected === true)) Yes
                             option(value="false" selected=(job.rejected === false)) No

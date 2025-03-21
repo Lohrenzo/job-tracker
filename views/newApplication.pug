@@ -32,7 +32,7 @@ block content
           div
             label(for="amount" class="block text-sm/6 font-medium text-gray-400") Amount
             div.mt-2
-              input(type="number" name="amount" id="amount" autocomplete="amount" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+              input(type="text" name="amount" id="amount" autocomplete="amount" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
 
           div
             label(for="timeScale" class="block text-sm/6 font-medium text-gray-400") Time Scale            
@@ -51,7 +51,15 @@ block content
           div
             label(for="stage" class="block text-sm/6 font-medium text-gray-400") Application Stage           
             div.mt-2
-              input(type="text" name="stage" id="stage" autocomplete="stage" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+              select(name="stage" id="stage" autocomplete="stage" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-sky-600 sm:text-sm/6")
+                option(value="Applied") Applied
+                option(value="Phone Screen") Phone Screen
+                option(value="Test/Challenge") Test/Challenge
+                option(value="Pending") Pending
+                option(value="Interview") Interview
+                option(value="Offer") Offer
+                option(value="Hired") Hired
+                option(value="Rejected") Rejected
 
           div
             label(for="cv" class="block text-sm/6 font-medium text-gray-400") CV           
