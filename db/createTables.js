@@ -13,7 +13,18 @@ export default async function createTables() {
 
     console.log("✅ Enum 'TimeScale' created (if not exists)");
 
-    // 2️⃣ Create Users Table
+    // 2️⃣ Create ENUM type for Job Stage if not exists
+    await pool.query(`
+      DO $$ BEGIN
+        CREATE TYPE job_stage AS ENUM ('Applied', 'Phone Screen', 'Test/Challenge', 'Pending', 'Interview', 'Offer', 'Hired', 'Rejected');
+      EXCEPTION
+        WHEN duplicate_object THEN null;
+      END $$;
+    `);
+
+    console.log("✅ Enum 'job_stage' created (if not exists)");
+
+    // 3️⃣ Create Users Table
     await pool.query(`
         CREATE TABLE IF NOT EXISTS users (
           id SERIAL PRIMARY KEY,
@@ -30,7 +41,7 @@ export default async function createTables() {
 
     console.log("✅ Users table created (if not exists)");
 
-    // 3️⃣ Create Jobs Table
+    // 4️⃣ Create Jobs Table
     await pool.query(`
         CREATE TABLE IF NOT EXISTS jobs (
           id SERIAL PRIMARY KEY,
@@ -40,8 +51,9 @@ export default async function createTables() {
           description TEXT NOT NULL,
           amount VARCHAR(50),
           timeScale timescale DEFAULT 'Yearly',
+          currency VARCHAR(50),
           dateApplied TIMESTAMP NOT NULL DEFAULT NOW(),
-          stage VARCHAR(100) NOT NULL,
+          stage job_stage DEFAULT 'Applied',
           cv VARCHAR(255),
           accepted BOOLEAN DEFAULT FALSE,
           rejected BOOLEAN DEFAULT FALSE,
@@ -55,6 +67,19 @@ export default async function createTables() {
       `);
 
     console.log("✅ Jobs table created (if not exists)");
+
+    // 5️⃣ Update existing data to have a default stage
+    // I'm doing this because I initially created the table
+    // before changing the stage colums to an Enum
+    await pool.query(`
+      ALTER TABLE jobs ALTER COLUMN stage SET DEFAULT 'Applied';
+  `);
+
+    await pool.query(`
+      UPDATE jobs SET stage = 'Applied' WHERE stage IS NULL;
+  `);
+
+    console.log("✅ Existing job records updated with default stage 'Applied'");
   } catch (error) {
     console.error("🚨 Error creating tables: ", error);
   }

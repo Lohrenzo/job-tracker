@@ -1,17 +1,18 @@
-import {
-  S3Client,
-  PutObjectCommand,
-  // CreateBucketCommand,
-  // DeleteObjectCommand,
-  // DeleteBucketCommand,
-  // paginateListObjectsV2,
-  GetObjectCommand,
-} from "@aws-sdk/client-s3";
 // import { parseUrl } from "@smithy/url-parser";
 // import { formatUrl } from "@aws-sdk/util-format-url";
 // import { Hash } from "@smithy/hash-node";
 // import { HttpRequest } from "@smithy/protocol-http";
-
+import {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  CreateBucketCommand,
+  DeleteObjectCommand,
+  DeleteBucketCommand,
+  paginateListObjectsV2,
+} from "@aws-sdk/client-s3";
+import dotenv from "dotenv";
+dotenv.config();
 // A region and credentials can be declared explicitly. For example
 // `new S3Client({ region: 'us-east-1', credentials: {...} })` would
 //initialize the client with those settings. However, the SDK will
@@ -54,4 +55,24 @@ export async function s3View(fileName) {
   );
 
   return Body;
+}
+
+// Delete an object from an S3 bucket
+export async function s3Delete(fileUrl) {
+  try {
+    // Extract the file key from the URL
+    const fileKey = fileUrl.split(".amazonaws.com/")[1];
+
+    await s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: process.env.BUCKET_NAME,
+        Key: fileKey,
+      })
+    );
+
+    console.log(`Deleted file from S3: ${fileKey}`);
+  } catch (error) {
+    console.error("Error deleting file from S3:", error);
+    throw error;
+  }
 }

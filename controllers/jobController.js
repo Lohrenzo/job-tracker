@@ -63,7 +63,7 @@ export const createJobController = async (req, res, next) => {
 
     console.log("New Job Created");
     // console.log("New Job Created: ", newJob);
-    res.redirect("/my-applications");
+    return res.redirect("/my-applications");
   } catch (error) {
     console.error("Error creating job: ", error);
     next(error);
@@ -78,13 +78,13 @@ export const loggenInUserJobsController = async (req, res) => {
 
     // console.log("My Jobs: ", jobs);
 
-    res.render("myJobs", {
+    return res.render("myJobs", {
       title: "My Job Applications",
       myJobs: jobs,
     });
   } catch (error) {
     console.error("Error fetching jobs: ", error);
-    res.render("myJobs", {
+    return res.render("myJobs", {
       title: "My Job Applications",
       myJobs: [],
       message: "Failed to load job applications.",
@@ -100,7 +100,7 @@ export const jobDetailController = async (req, res, next) => {
     const job = await getJobBySlug(req.params.slug);
 
     if (!job) {
-      res.render("applicationDetail", {
+      return res.render("applicationDetail", {
         title: `Job Application Detail`,
         message: `Job Application Not Available!!`,
       });
@@ -108,7 +108,7 @@ export const jobDetailController = async (req, res, next) => {
 
     // Make sure the user can only view jobs posted by them
     if (job.candidateid !== req.session.user.id) {
-      res.render("applicationDetail", {
+      return res.render("applicationDetail", {
         title: `Job Application Detail`,
         message: `You Are Not Authorized To View This Job!!`,
       });
@@ -117,7 +117,7 @@ export const jobDetailController = async (req, res, next) => {
 
     // console.log("Job Application Detail: ", job);
 
-    res.render("applicationDetail", {
+    return res.render("applicationDetail", {
       title: `Detail for ${job.role}`,
       job: job,
     });
@@ -133,7 +133,7 @@ export const updateJobController = async (req, res, next) => {
     const oldJobData = await getJobBySlug(req.params.slug);
 
     if (!oldJobData) {
-      res.render("applicationDetail", {
+      return res.render("applicationDetail", {
         title: `Job Application Detail`,
         message: `Job Application Not Available!!`,
       });
@@ -164,7 +164,7 @@ export const updateJobController = async (req, res, next) => {
       updatedJobData.rejected
     );
 
-    res.redirect(`/my-applications/${req.params.slug}`);
+    return res.redirect(`/my-applications/${req.params.slug}`);
   } catch (error) {
     console.error("Error updating job application:", error.message);
     next(error);

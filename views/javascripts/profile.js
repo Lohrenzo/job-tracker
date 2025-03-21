@@ -1,10 +1,10 @@
 console.log = console.warn = console.error = function () {};
 
-// Logic for edit job details popup start
+// Logic for delete profile popup start
 // Select elements
-const editBtn = document.getElementById("edit-btn");
-const editPopup = document.getElementById("edit-popup");
-const closeEditBtn = document.getElementById("close-edit-btn");
+const deleteBtn = document.getElementById("delete-btn");
+const deletePopup = document.getElementById("delete-popup");
+const closeDeleteBtn = document.getElementById("close-delete-btn");
 
 // Function to toggle popup visibility
 const togglePopup = () => {
@@ -12,13 +12,13 @@ const togglePopup = () => {
   deleteBtn.setAttribute("aria-expanded", !isHidden);
 };
 
-// Toggle popup when clicking the edit button
+// Toggle popup
 deleteBtn?.addEventListener("click", (event) => {
   event.stopPropagation(); // Prevents bubbling issues
   togglePopup();
 });
 
-// Close popup when clicking the close button
+// Close popup
 closeDeleteBtn?.addEventListener("click", () => {
   togglePopup();
 });
